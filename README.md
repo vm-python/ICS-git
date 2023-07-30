@@ -1,2 +1,2 @@
-# ICS-git
- Payment Approval in python django
+# ICS
+ Payment Approval 
