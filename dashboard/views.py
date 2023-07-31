@@ -9,8 +9,8 @@ def home(request):
     context = {
         'companies': Company.objects.all()
     }
-    return render(request, 'home.html', context)
+    return render(request, 'dashboard/home.html', context)
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'dashboard/about.html')

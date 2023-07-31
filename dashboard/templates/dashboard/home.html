@@ -1,0 +1,15 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+    {% for company in companies %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ company.officer.username }}</a>
+              <small class="text-muted">{{ company.date_posted|date:"F d, Y" }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ company.name }}</a></h2>
+            <p class="article-content">{{ company.address }}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
