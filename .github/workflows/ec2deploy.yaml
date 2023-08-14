@@ -45,12 +45,12 @@ jobs:
         echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
         chmod 600 key.pem
     - name: pull docker image
-      run: ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker pull v95466/ics-dev:latest'
+      run: ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker pull v954667/ics-dev:latest'
     - name: stop the running container
       run: |
         ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker stop ics-dev || true'
         ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker rm ics-dev || true'
     - name: run the new container
       run: |
-        ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker run -d --name ics-dev -p 80:8000 v95466/ics-dev:latest'
+        ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo docker run -d --name ics-dev -p 80:8000 v954667/ics-dev:latest'
 
