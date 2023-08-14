@@ -42,7 +42,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: set permissions for private-key
       run: |
-        echo "${{ env.AWS_PRIVATE_KEY }}" > key.pem
+        echo "${{ secrets.AWS_PRIVATE_KEY }}"
+        echo "${{ secrets.AWS_PRIVATE_KEY }}" > key.pem
         chmod 600 key.pem
     - name: pull docker image
       run: ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.117.156.4 'sudo doker pull v95466/ics-dev:latest'
