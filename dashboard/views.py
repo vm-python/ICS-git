@@ -1,7 +1,15 @@
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Company
-from django.views.generic import ListView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView
+)
+
 
 # Create your views here.
 
@@ -19,6 +27,19 @@ def about(request):
 
 class CompanyListView(ListView):
     model = Company
-    # app/model_viewtype.html    dashboard/company_list.html in the templates directory
+    # <app>/<model>_<viewtype>.html    dashboard/company_list.html in the templates directory
     template_name = "dashboard/home.html"
     context_object_name = "companies"
+
+
+class CompanyDetailView(DetailView):
+    model = Company
+
+
+class CompanyCreateView(LoginRequiredMixin, CreateView):
+    model = Company
+    fields = ["name", "fed_tax_id", "reg_state", "address", "zip_code"]
+
+    def form_valid(self, form):
+        form.instance.officer = self.request.user
+        return super().form_valid(form)

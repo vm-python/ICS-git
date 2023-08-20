@@ -7,7 +7,7 @@
               <a class="mr-2" href="#">{{ company.officer.username }}</a>
               <small class="text-muted">{{ company.date_posted|date:"F d, Y" }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ company.name }}</a></h2>
+            <h2><a class="article-title" href="{% url 'company-detail' company.id%}">{{ company.name }}</a></h2>
             <p class="article-content">{{ company.address }}</p>
           </div>
         </article>
