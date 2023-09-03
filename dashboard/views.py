@@ -7,7 +7,9 @@ from .models import Company
 from django.views.generic import (
     ListView,
     DetailView,
-    CreateView
+    CreateView,
+    DeleteView,
+    UpdateView
 )
 
 
@@ -43,3 +45,17 @@ class CompanyCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.officer = self.request.user
         return super().form_valid(form)
+    
+
+class CompanyUpdateView(UpdateView):
+    model = Company
+    fields = ["name", "fed_tax_id", "reg_state", "address", "zip_code"]
+
+    def form_valid(self, form):
+        form.instance.officer = self.request.user
+        return super().form_valid(form)
+
+
+class CompanyDeleteView(DeleteView):
+    model = Company
+    success_url = "/"

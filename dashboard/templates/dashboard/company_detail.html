@@ -5,6 +5,10 @@
         <div class="article-metadata">
             <a class="mr-2" href="#">{{ company.officer.username }}</a>
             <small class="text-muted">{{ company.date_posted|date:"F d, Y" }}</small>
+            <div>
+                <a class="btn btn-outline-secondary btn-sm my-1" href="{% url 'company-update' company.id %}">Update</a>
+                <a class="btn btn-outline-danger btn-sm my-1" href="{% url 'company-delete' company.id %}">Delete</a>
+            </div>
         </div>
         <h2><a class="article-title" href="#">{{ company.name }}</a></h2>
         <p class="article-content">Fed. Tax ID: {{ company.fed_tax_id }}</p>
