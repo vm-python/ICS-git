@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Profile
+from django.views.generic import (
+    UpdateView
+)
 
 # Create your views here.
 
@@ -26,3 +30,8 @@ def register(request):
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ["image"]

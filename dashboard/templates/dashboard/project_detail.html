@@ -1,0 +1,17 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ project.manager.username }}</a>
+            <small class="text-muted">{{ project.date_posted|date:"F d, Y" }}</small>
+            <div>
+                <a class="btn btn-outline-secondary btn-sm my-1" href="{% url 'project-update' project.id %}">Update</a>
+            </div>
+            <h2><a class="article-title" href="#">{{ project.name }}</a></h2>
+            <p class="article-content">Project under: {{ project.parent_company.name}}</p>
+            <p class="article-content">{{ project.description }}</p>
+        </div>
+    </div>
+</article>
+{% endblock content %}

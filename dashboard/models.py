@@ -28,10 +28,16 @@ class Project(models.Model):
     description = models.TextField()
     manager = models.ForeignKey(User, on_delete=models.PROTECT)
 
+    def get_absolute_url(self):
+        return reverse("project-detail", kwargs={'pk': self.pk})
+
+
 
 class Task(models.Model):
     name = models.CharField(max_length=99)
     description = models.TextField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
+    def get_absolute_url(self):
+        return reverse("task-detail", kwargs={'pk': self.pk})
 

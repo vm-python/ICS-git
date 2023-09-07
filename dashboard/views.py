@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Company
+from .models import Company, Project, Task
 from django.views.generic import (
     ListView,
     DetailView,
@@ -59,3 +59,31 @@ class CompanyUpdateView(UpdateView):
 class CompanyDeleteView(DeleteView):
     model = Company
     success_url = "/"
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    fields = ["name", "parent_company", "description", "manager"]
+
+    
+class ProjectUpdateView(UpdateView):
+    model = Project
+    fields = ["name", "parent_company", "description", "manager"]
+
+
+class TaskDetailView(DetailView):
+    model = Task
+
+
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    fields = ["name", "description", "project"]
+
+    
+class TaskUpdateView(UpdateView):
+    model = Task
+    fields = ["name", "description", "project"]
