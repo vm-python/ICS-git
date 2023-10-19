@@ -1,8 +1,9 @@
+from typing import Optional
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .models import Company, Project, Task
 from django.views.generic import (
     ListView,
@@ -47,18 +48,30 @@ class CompanyCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 
-class CompanyUpdateView(UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Company
     fields = ["name", "fed_tax_id", "reg_state", "address", "zip_code"]
 
     def form_valid(self, form):
         form.instance.officer = self.request.user
         return super().form_valid(form)
+    
+    def test_func(self):
+        company = self.get_object()
+        user = self.request.user
+
+        return company.officer == user
 
 
-class CompanyDeleteView(DeleteView):
+class CompanyDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Company
     success_url = "/"
+
+    def test_func(self):
+        company = self.get_object()
+        user = self.request.user
+
+        return company.officer == user
 
 
 class ProjectDetailView(DetailView):
@@ -70,9 +83,15 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     fields = ["name", "parent_company", "description", "manager"]
 
     
-class ProjectUpdateView(UpdateView):
+class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Project
     fields = ["name", "parent_company", "description", "manager"]
+
+    def test_func(self):
+        project = self.get_object()
+        user = self.request.user
+
+        return project.manager == user
 
 
 class TaskDetailView(DetailView):
@@ -84,6 +103,6 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     fields = ["name", "description", "project"]
 
     
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
     fields = ["name", "description", "project"]
